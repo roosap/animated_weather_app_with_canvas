@@ -1,28 +1,49 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="logo">
+    <h1>ilma<span id="dot">.</span></h1>
+  </div>
+  <div id="footer">
+    <p>Sponsored by Spend<span id="dot">.</span></p>
+  </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
+  data() {
+    return {
+      cities: [],
+      selectedCity: null // change to empty object?
+    }
+  },
   components: {
-    HelloWorld
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
+  @import url('https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap');
+
+  #logo {
+    font-family: 'Nunito Sans';
+    color: slategrey;
+    font-size: 3em;
+    text-align: center;
+  }
+
+  #dot {
+    color: #89B802;
+  }
+
+  #footer {
+    text-align: right;
+    width: 15%;
+    height: auto;
+    margin-right: 5rem;
+    float: right;
+  }
 </style>
