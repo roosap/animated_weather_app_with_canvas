@@ -1,28 +1,33 @@
 <template>
   <div id="app">
-  <div id="logo">
-    <h1>ilma<span id="dot">.</span></h1>
-  </div>
-  <div id="footer">
-    <p>Sponsored by Spend<span id="dot">.</span></p>
-  </div>
+    <div id="logo">
+      <h1>ilma<span id="dot">.</span></h1>
+    </div>
+    <div id="menu">
+      <input type="text" v-model="search" placeholder="Search for your city">
+       <cities-select :cities="filteredCities"/>
+       <city-weather :city="selectedCity" v-if="selectedCity"/>
+    </div>
+    <div id="footer">
+      <p>Sponsored by Spend<span id="dot">.</span></p>
+    </div>
   </div>
 </template>
 
 <script>
+import CitiesSelect from './components/CitiesSelect';
+import CityWeather from './components/CityWeather';
 
 export default {
   name: 'App',
   data() {
     return {
       cities: [],
-      selectedCity: null // change to empty object?
+      selectedCity: null, // change to empty object?
+      search: ""
     }
   },
   mounted() {
-    // fetch('https://api.openweathermap.org/data/2.5/weather?id=6255152&appid=12b0c4fd863f4ff711615b989ae19f37')
-    // .then(res => res.json())
-    // .then(data => this.cities = [...this.cities, this.formatData(data)])
     this.fetchWeatherData();
   },
   methods: {
@@ -54,6 +59,17 @@ export default {
     cityURL(id){
       return `https://api.openweathermap.org/data/2.5/weather?id=${id}&appid=12b0c4fd863f4ff711615b989ae19f37`
     }
+  },
+  computed: {
+    filteredCities: function() {
+      return this.cities.filter(city => {
+        return city.name.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
+  },
+  components: {
+    "cities-select": CitiesSelect,
+    "city-weather": CityWeather
   }
 
 }
