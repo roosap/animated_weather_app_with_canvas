@@ -4,12 +4,12 @@
       <h1>ilma<span id="dot">.</span></h1>
     </div>
     <div id="menu">
-      <input type="text" v-model="search" placeholder="Search for your city">
+      <input type="text" v-model="search" placeholder="Filter cities">
        <cities-select :cities="filteredCities"/>
        <city-weather :city="selectedCity" v-if="selectedCity"/>
     </div>
     <div id="footer">
-      <p>Sponsored by Spend<span id="dot">.</span></p>
+      <p>Sponsored by <span id="spend">Spend<span id="dot">.</span></span></p>
     </div>
   </div>
 </template>
@@ -67,7 +67,7 @@ export default {
     filterData(data){
       data.weather = data.weather[0].main;
       data.celsius = (parseInt(data.main.temp) - 273.15).toFixed();
-      data.fahrenheit = (parseInt(data.celsius) * (9/5) + 32);
+      data.fahrenheit = (parseInt(data.celsius) * (9/5) + 32).toFixed();
       return data;
     }
   },
@@ -107,6 +107,10 @@ export default {
     height: auto;
     margin-right: 5rem;
     float: right;
+  }
+
+  #spend {
+    font-size: 1.2em;
   }
 
   #app {

@@ -6,31 +6,42 @@
       <p>{{city.celsius}} °C</p>
       <p>{{city.fahrenheit}} °F</p>
     </div>
-      <!-- :class="city.weather.toLowerCase()" -->
       <canvas id="canvas" width="578" height="200"></canvas>
   </div>
 </template>
 
 <script>
+import {eventBus} from '../main.js';
+
 export default {
   props: ['city'],
+  data() {
+    return {
+      currentWeather: null
+    }
+  },
   mounted() {
-    this.draw()
+    eventBus.$on('city-selected', (city) => {
+      this.currentWeather = city.weather
+      this.draw(this.currentWeather)
+    })
   },
   methods: {
-    draw: function() {
+    draw: function(weather) {
       let context = canvas.getContext('2d');
-      context.beginPath();
-      context.moveTo(170, 80);
-      context.bezierCurveTo(120, 100, 130, 150, 230, 150);
-      context.bezierCurveTo(250, 150, 300, 170, 340, 150);
-      context.bezierCurveTo(450, 170, 460, 120, 410, 90);
-      context.bezierCurveTo(400, 60, 370, 40, 350, 50);
-      context.bezierCurveTo(320, 10, 270, 10, 240, 50);
-      context.bezierCurveTo(200, 30, 180, 50, 170, 80);
-      context.closePath();
-      context.fillStyle = '#D3D3D3';
-      context.fill();
+        if (weather === "Clouds") {
+        context.beginPath();
+        context.moveTo(170, 80);
+        context.bezierCurveTo(120, 100, 130, 150, 230, 150);
+        context.bezierCurveTo(250, 150, 300, 170, 340, 150);
+        context.bezierCurveTo(450, 170, 460, 120, 410, 90);
+        context.bezierCurveTo(400, 60, 370, 40, 350, 50);
+        context.bezierCurveTo(320, 10, 270, 10, 240, 50);
+        context.bezierCurveTo(200, 30, 180, 50, 170, 80);
+        context.closePath();
+        context.fillStyle = '#D3D3D3';
+        context.fill();
+      };
     }
   }
 }
