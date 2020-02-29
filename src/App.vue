@@ -53,7 +53,8 @@ export default {
         this.cityURL(6356055), // Barcelona
         this.cityURL(3054643), // Budapest
         this.cityURL(1856215), // Nagano
-        this.cityURL(2648579) // Glasgow
+        this.cityURL(2648579), // Glasgow
+        this.cityURL(3871336) // Santiago
       ];
 
       Promise.all(urls.map(url => fetch(url)
@@ -93,8 +94,9 @@ export default {
   #logo {
     font-family: 'Nunito Sans';
     color: slategrey;
-    font-size: 3em;
+    font-size: 2.5em;
     text-align: center;
+    padding-bottom: 0;
   }
 
   #dot {
