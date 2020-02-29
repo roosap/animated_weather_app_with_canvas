@@ -1,9 +1,11 @@
 <template lang="html">
   <div v-if="city">
     <h2>{{city.name}}</h2>
+    <div id="details">
       <p>{{city.weather}}</p>
       <p>{{city.celsius}} °C</p>
       <p>{{city.fahrenheit}} °F</p>
+    </div>
       <!-- :class="city.weather.toLowerCase()" -->
       <canvas id="canvas" width="578" height="200"></canvas>
   </div>
@@ -35,6 +37,20 @@ export default {
 </script>
 
 <style lang="css" scoped>
+  h2 {
+    text-align: center;
+    font-size: 1.5em;
+  }
 
+  #details {
+    width: 50rem;
+    font-size: 1em;
+  }
+
+  #canvas {
+    width: 45rem;
+    margin-left: 20rem;
+    margin-bottom: 10rem;
+  }
 
 </style>

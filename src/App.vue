@@ -108,4 +108,8 @@ export default {
     margin-right: 5rem;
     float: right;
   }
+
+  #app {
+    margin-left: 2rem;
+  }
 </style>
