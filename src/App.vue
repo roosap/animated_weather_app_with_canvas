@@ -17,18 +17,23 @@
 <script>
 import CitiesSelect from './components/CitiesSelect';
 import CityWeather from './components/CityWeather';
+import {eventBus} from './main.js';
 
 export default {
   name: 'App',
   data() {
     return {
       cities: [],
-      selectedCity: null, // change to empty object?
+      selectedCity: {},
       search: ""
     }
   },
   mounted() {
     this.fetchWeatherData();
+
+    eventBus.$on('city-selected', (city) => {
+      this.selectedCity = city;
+    })
   },
   methods: {
     fetchWeatherData() {
@@ -53,11 +58,17 @@ export default {
 
       Promise.all(urls.map(url => fetch(url)
         .then(response => response.json())
-        .then(data => this.cities = [...this.cities, data])
+        .then(data => this.cities = [...this.cities, this.filterData(data)])
       ))
     },
     cityURL(id){
       return `https://api.openweathermap.org/data/2.5/weather?id=${id}&appid=12b0c4fd863f4ff711615b989ae19f37`
+    },
+    filterData(data){
+      data.weather = data.weather[0].main;
+      data.celsius = (parseInt(data.main.temp) - 273.15).toFixed();
+      data.fahrenheit = (parseInt(data.celsius) * (9/5) + 32);
+      return data;
     }
   },
   computed: {
