@@ -50,13 +50,7 @@ export default {
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       if (this.currentWeather === "Clouds") {
-        this.cloud();
-        let x = 10;
-        let y = 200;
-        x += 1;
-        if (x > canvas.width) {
-          x = 0
-        }
+        this.cloud()
       } else if (this.currentWeather === "Thunderstorm") {
           this.thunderstorm()
       } else if (this.currentWeather === "Clear") {
@@ -77,6 +71,8 @@ export default {
             flake.y = 0;
           }
         })
+      } else {
+        this.sorry()
       }
       // Don't touch this, else laptop will overheat and die
       if ((timestamp - start) < 2000) {
@@ -167,8 +163,15 @@ export default {
         this.flakes.push({ x: 320, y: 10 });
         this.flakes.push({ x: 420, y: 300 });
         this.flakes.push({ x: 200, y: 100 });
+      },
+      sorry: function() {
+        let context = canvas.getContext('2d');
+        context.font = "1.8em Nunito";
+        context.fillStyle = "slategrey";
+        context.textAlign = "center";
+        context.fillText("Sorry, we haven't animated your weather just yet!", canvas.width/2, canvas.height/2);
       }
-  }
+    }
 }
 
 </script>
