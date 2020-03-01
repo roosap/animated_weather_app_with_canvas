@@ -82,9 +82,13 @@ export default {
   },
   computed: {
     filteredCities: function() {
-      return this.cities.filter(city => {
+      let filtered = this.cities.filter(city => {
         return city.name.toLowerCase().includes(this.search.toLowerCase())
       })
+      if (filtered.length === 1) {
+        this.selectedCity = filtered[0]
+      }
+      return filtered
     }
   },
   components: {
