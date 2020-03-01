@@ -54,7 +54,8 @@ export default {
         this.cityURL(3054643), // Budapest
         this.cityURL(1856215), // Nagano
         this.cityURL(2648579), // Glasgow
-        this.cityURL(3871336) // Santiago
+        this.cityURL(3871336), // Santiago
+        this.cityURL(5879400) // Anchorage
       ];
 
       Promise.all(urls.map(url => fetch(url)

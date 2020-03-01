@@ -27,6 +27,7 @@ export default {
       rectW: 200,
       rectX: 50,
       drops: [],
+      flakes: []
     }
   },
   mounted() {
@@ -34,7 +35,9 @@ export default {
     eventBus.$on('city-selected', (city) => {
       this.currentWeather = city.weather
       if (this.currentWeather === "Rain") {
-          this.createRaindrops()
+        this.createRaindrops()
+      } else if (this.currentWeather === "Snow") {
+        this.createSnowflakes()
       }
     })
   },
@@ -46,6 +49,12 @@ export default {
 
       if (this.currentWeather === "Clouds") {
         this.cloud();
+        let x = 10;
+        let y = 200;
+        x += 1;
+        if (x > canvas.width) {
+          x = 0
+        }
       } else if (this.currentWeather === "Thunderstorm") {
           this.thunderstorm()
       } else if (this.currentWeather === "Clear") {
@@ -58,8 +67,16 @@ export default {
             drop.y = 0;
           }
         })
+      } else if (this.currentWeather === "Snow") {
+        this.flakes.forEach((flake) => {
+          this.snow(flake.x, flake.y);
+          flake.y += 1;
+          if (flake.y > canvas.height) {
+            flake.y = 0;
+          }
+        })
       }
-      // Don't touch this
+      // Don't touch this, else laptop will overheat and die
       if ((timestamp - start) < 2000) {
         start = null;
         requestAnimationFrame(this.anim)
@@ -92,7 +109,7 @@ export default {
         context.bezierCurveTo(320, 10, 270, 10, 240, 50);
         context.bezierCurveTo(200, 30, 180, 50, 170, 80);
         context.closePath();
-        context.fillStyle = '#404040';
+        context.fillStyle = '#656970';
         context.fill();
       },
       sunny: function() {
@@ -106,17 +123,14 @@ export default {
       },
       rain: function (posX, posY) {
         let context = canvas.getContext('2d');
-
         context.beginPath();
         context.moveTo(posX - 5, posY);
         context.lineTo(posX, posY - 7);
         context.lineTo(posX + 5, posY);
         context.arc(posX, posY, 5, 0, Math.PI);
-
         context.closePath();
         context.fillStyle = '#7094cf';
         context.fill();
-
       },
       createRaindrops: function() {
         this.drops = []
@@ -128,8 +142,30 @@ export default {
         this.drops.push({ x: 400, y: 290 });
         this.drops.push({ x: 500, y: 0 });
         this.drops.push({ x: 160, y: 220 });
+      },
+      snow: function (posX, posY) {
+        let context = canvas.getContext('2d');
+        context.beginPath();
+        context.arc(posX, posY, 7, 0, Math.PI * 2, false);
+        context.closePath();
+        context.fill();
+        context.fillStyle = '#d3e1e6';
+      },
+      createSnowflakes: function() {
+        this.flakes = []
+        this.flakes.push({ x: 180, y: 0 });
+        this.flakes.push({ x: 280, y: 50 });
+        this.flakes.push({ x: 350, y: 120 });
+        this.flakes.push({ x: 470, y: 40 });
+        this.flakes.push({ x: 300, y: 170 });
+        this.flakes.push({ x: 400, y: 290 });
+        this.flakes.push({ x: 500, y: 0 });
+        this.flakes.push({ x: 160, y: 120 });
+        this.flakes.push({ x: 240, y: 30 });
+        this.flakes.push({ x: 320, y: 10 });
+        this.flakes.push({ x: 420, y: 300 });
+        this.flakes.push({ x: 200, y: 100 });
       }
-
   }
 }
 
