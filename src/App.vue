@@ -122,7 +122,6 @@ export default {
     height: auto;
     margin-right: 5rem;
     float: right;
-    margin-top: 20rem;
   }
 
   #spend {

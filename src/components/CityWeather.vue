@@ -60,8 +60,9 @@ export default {
     },
     draw: function() {
       if (this.currentWeather === "Clouds") {
-        this.cloud()
-
+        this.cloud();
+        let ctx = canvas.getContext('2d');
+        // ctx.rotate(300)
       } else if (this.currentWeather === "Clear") {
         this.sunny()
         let radius = 25 + 100 * Math.abs(Math.cos(this.angle));
