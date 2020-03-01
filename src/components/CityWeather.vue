@@ -8,7 +8,7 @@
       <p>{{city.celsius}} °C</p>
       <p>{{city.fahrenheit}} °F</p>
     </div>
-      <canvas id="canvas" width="700" height="600">Current weather in {{city.name}} is {{city.weather}}</canvas>
+      <canvas id="canvas" width="700" height="400">Current weather in {{city.name}} is {{city.weather}}</canvas>
   </div>
 </template>
 
@@ -32,8 +32,10 @@ export default {
   mounted() {
     requestAnimationFrame(this.anim),
     eventBus.$on('city-selected', (city) => {
-      this.currentWeather = city.weather;
-      this.createRaindrops()
+      this.currentWeather = city.weather
+      if (this.currentWeather === "Rain") {
+          this.createRaindrops()
+      }
     })
   },
   methods: {
@@ -117,10 +119,15 @@ export default {
 
       },
       createRaindrops: function() {
+        this.drops = []
         this.drops.push({ x: 180, y: 0 });
         this.drops.push({ x: 280, y: 50 });
-        this.drops.push({ x: 350, y: 80 });
+        this.drops.push({ x: 350, y: 120 });
         this.drops.push({ x: 470, y: 40 });
+        this.drops.push({ x: 300, y: 170 });
+        this.drops.push({ x: 400, y: 290 });
+        this.drops.push({ x: 500, y: 0 });
+        this.drops.push({ x: 160, y: 220 });
       }
 
   }
