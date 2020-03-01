@@ -87,6 +87,7 @@ export default {
       })
       if (filtered.length === 1) {
         this.selectedCity = filtered[0]
+        eventBus.$emit('city-selected', filtered[0])
       }
       return filtered
     }
