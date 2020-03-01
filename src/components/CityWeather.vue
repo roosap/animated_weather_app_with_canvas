@@ -3,6 +3,8 @@
     <h2 :class="city.celsius > 10 ? 'warm' : 'cold'">{{city.name}}</h2>
     <div id="details">
       <p>{{city.weather}}</p>
+    </div>
+    <div id="temp">
       <p>{{city.celsius}} °C</p>
       <p>{{city.fahrenheit}} °F</p>
     </div>
@@ -18,6 +20,8 @@ export default {
   data() {
     return {
       currentWeather: null
+      // flakes: [],
+      // start: null
     }
   },
   mounted() {
@@ -34,8 +38,8 @@ export default {
           this.thunderstorm()
       } else if (weather === "Clear") {
         this.sunny()
-      // } else if (weather === "Rain") {
-      //   this.rain()
+      // } else if (weather === "Snow") {
+      //   this.snow()
       };
     },
       cloud: function() {
@@ -76,22 +80,35 @@ export default {
         context.fillStyle = '#ffcc00';
         context.fill();
       }
-      // rain: function() {
-      //   this.cloud()
-      //   let ctx = canvas.getContext('2d');
-      //   ctx.save();
-      //   this.drop(10, 10);
-      //   ctx.moveTo(300, 500);
-      //   ctx.lineTo(x, y - 7);
-      //   ctx.lineTo(x + 5, y);
-      //   ctx.arc(x, y, 5, 0, Math.PI);
-      //   ctx.closePath();
-      //   y = y + 3;
-      //   if (y == canvas.height) {
-      //     y = 0
+      // addFlake: function() {
+      //   let context = canvas.getContext('2d');
+      //   let x = Math.floor(Math.random() * canvas.width) + 1;
+      //   let y = 0;
+      //   let s = Math.floor(Math.random() * 3) + 1;
+      //   this.flakes.push({"x":x, "y":y, "s":s});
+      // },
+      // snow: function() {
+      //   window.requestAnimationFrame(this.step);
+      //   let context = canvas.getContext('2d');
+      //   this.addFlake();
+      //   for (let i = 0; i < this.flakes.length; i++) {
+      //     context.fillStyle = "rgba(255,255,255,.75)";
+      //     context.beginPath();
+      //     context.arc(this.flakes[i].x, this.flakes[i].y+=this.flakes[i].s*.5, this.flakes[i].s*.5, 0, Math.PI*2, false);
+      //     context.fill();
+      //       if (this.flakes[i].y > canvas.height) {
+      //         this.flakes.splice(i, 1);
+      //       }
       //   }
-      //   let m = setTimeout('drop(' + x + ',' + y + ')', 20);
-      // }
+      // },
+      // step: function(timestamp) {
+      //   if (!this.start) this.start = timestamp;
+      //   let progress = timestamp - this.start;
+      //   let element = this.cloud();
+      //   element.style.transform = 'translateX(' + Math.min(progress / 10, 200) + 'px)';
+      //   if (progress < 2000) {
+      //     window.requestAnimationFrame(step);
+      //   }
       // }
   }
 }
@@ -110,14 +127,23 @@ export default {
   }
 
   #details {
-    width: 50rem;
+    text-align: center;
     font-size: 1em;
+    margin-top: 2rem;
+    margin-bottom: 0;
+  }
+
+  #temp {
+    text-align: center;
+    font-size: 1.6em;
+    margin-left: 40rem;
+    display: block;
   }
 
   #canvas {
     width: 30rem;
     margin-left: 30rem;
-    margin-bottom: 1rem;
+    margin-bottom: 10rem;
   }
 
   .cold {
