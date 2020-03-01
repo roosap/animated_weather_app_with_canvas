@@ -28,6 +28,7 @@ export default {
       rectY: 300,
       rectW: 200,
       rectX: 50,
+      angle: 200,
       drops: [],
       flakes: []
     }
@@ -51,10 +52,10 @@ export default {
 
       if (this.currentWeather === "Clouds") {
         this.cloud()
-      } else if (this.currentWeather === "Thunderstorm") {
-          this.thunderstorm()
       } else if (this.currentWeather === "Clear") {
         this.sunny()
+        let radius = 25 + 100 * Math.abs(Math.cos(this.angle));
+          this.angle += 2 / 150
       } else if (this.currentWeather === "Rain") {
         this.drops.forEach((drop) => {
           this.rain(drop.x, drop.y);
@@ -95,26 +96,12 @@ export default {
         context.fillStyle = '#D3D3D3';
         context.fill();
       },
-      thunderstorm: function() {
-        let context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.beginPath();
-        context.moveTo(170, 80);
-        context.bezierCurveTo(120, 100, 130, 150, 230, 150);
-        context.bezierCurveTo(250, 150, 300, 170, 340, 150);
-        context.bezierCurveTo(450, 170, 460, 120, 410, 90);
-        context.bezierCurveTo(400, 60, 370, 40, 350, 50);
-        context.bezierCurveTo(320, 10, 270, 10, 240, 50);
-        context.bezierCurveTo(200, 30, 180, 50, 170, 80);
-        context.closePath();
-        context.fillStyle = '#656970';
-        context.fill();
-      },
       sunny: function() {
         let context = canvas.getContext('2d');
+        let radius = 25 + 100 * Math.abs(Math.cos(this.angle));
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.beginPath();
-        context.arc(310, 150, 125, 0, 2 * Math.PI);
+        context.arc(310, 150, radius, 0, 2 * Math.PI);
         context.closePath();
         context.fillStyle = '#ffcc00';
         context.fill();
