@@ -4,8 +4,8 @@
       <h1>ilma<span id="dot">.</span></h1>
     </div>
     <div id="menu">
-      <input type="text" v-model="search" placeholder="Filter cities">
-       <cities-select :cities="filteredCities"/>
+       <input @click="clicked" v-model="search" placeholder="Type in your city">
+       <cities-select :cities="filteredCities" :clickStatus="clickedStatus"/>
        <city-weather :city="selectedCity" v-if="selectedCity"/>
     </div>
     <div id="footer">
@@ -24,8 +24,9 @@ export default {
   data() {
     return {
       cities: [],
-      selectedCity: {},
-      search: ""
+      selectedCity: null, // if this is an empty object, features are shown on page as if a city has been selected despite object being empty!! has to be null
+      search: "",
+      clickedStatus: false
     }
   },
   mounted() {
@@ -36,6 +37,12 @@ export default {
     })
   },
   methods: {
+    clicked() {
+      this.clickedStatus = true;
+      eventBus.$emit('clicked', () => {
+      this.clickedStatus = true;
+    })
+    },
     fetchWeatherData() {
       const urls = [
         this.cityURL(6255152), // Antarctica
@@ -110,6 +117,7 @@ export default {
     height: auto;
     margin-right: 5rem;
     float: right;
+    margin-top: 20rem;
   }
 
   #spend {

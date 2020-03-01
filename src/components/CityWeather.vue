@@ -1,5 +1,6 @@
 <template lang="html">
   <div v-if="city">
+    <span>
     <h2 :class="city.celsius > 10 ? 'warm' : 'cold'">{{city.name}}</h2>
     <div id="details">
       <p>{{city.weather}}</p>
@@ -9,6 +10,7 @@
       <p>{{city.fahrenheit}} °F</p>
     </div>
       <canvas id="canvas" width="700" height="400">Current weather in {{city.name}} is {{city.weather}}</canvas>
+    </span>
   </div>
 </template>
 
