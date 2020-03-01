@@ -50,13 +50,22 @@ export default {
       let ctx = canvas.getContext('2d');
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      this.draw()
+
+      // Don't touch this, else laptop will overheat and die
+      if ((timestamp - start) < 2000) {
+        start = null;
+        requestAnimationFrame(this.anim)
+      }
+    },
+    draw: function() {
       if (this.currentWeather === "Clouds") {
         this.cloud()
 
       } else if (this.currentWeather === "Clear") {
         this.sunny()
         let radius = 25 + 100 * Math.abs(Math.cos(this.angle));
-          this.angle += 2 / 150
+          this.angle += 2 / 170
 
       } else if (this.currentWeather === "Rain") {
         this.drops.forEach((drop) => {
@@ -75,14 +84,9 @@ export default {
             flake.y = 0;
           }
         })
-        
+
       } else {
         this.sorry()
-      }
-      // Don't touch this, else laptop will overheat and die
-      if ((timestamp - start) < 2000) {
-        start = null;
-        requestAnimationFrame(this.anim)
       }
     },
       cloud: function() {
