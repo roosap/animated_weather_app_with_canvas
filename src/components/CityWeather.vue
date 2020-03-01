@@ -32,27 +32,16 @@ export default {
   mounted() {
     requestAnimationFrame(this.anim),
     eventBus.$on('city-selected', (city) => {
-      this.currentWeather = city.weather
-      // this.draw(this.currentWeather)
-
-      // If weather = rain, create an array of raindrops
+      this.currentWeather = city.weather;
+      this.createRaindrops()
     })
   },
   methods: {
     anim: function(timestamp) {
       if (!start) start = timestamp;
-      console.log('anim frame')
       let context = canvas.getContext('2d');
       context.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Update the x / y position of the raindrop
-      // This will become a for loop to update EACH drop
-      this.rectY += 1;
-      if (this.rectY > canvas.height) {
-        this.rectY = 0;
-      }
-
-      // After doing the position update, call the right draw method to draw the weather
       if (this.currentWeather === "Clouds") {
         this.cloud();
       } else if (this.currentWeather === "Thunderstorm") {
@@ -60,12 +49,16 @@ export default {
       } else if (this.currentWeather === "Clear") {
         this.sunny()
       } else if (this.currentWeather === "Rain") {
-        // When multipe drops, loop through each and call this.rain(x, y) for each drop
-        this.rain(this.rectX, this.rectY)
+        this.drops.forEach((drop) => {
+          this.rain(drop.x, drop.y);
+          drop.y += 1;
+          if (drop.y > canvas.height) {
+            drop.y = 0;
+          }
+        })
       }
-
       // Don't touch this
-      if ((timestamp - start) < 5000) {
+      if ((timestamp - start) < 2000) {
         start = null;
         requestAnimationFrame(this.anim)
       }
@@ -81,7 +74,6 @@ export default {
         context.bezierCurveTo(400, 60, 370, 40, 350, 50);
         context.bezierCurveTo(320, 10, 270, 10, 240, 50);
         context.bezierCurveTo(200, 30, 180, 50, 170, 80);
-        // context.translate(105, 0);
         context.closePath();
         context.fillStyle = '#D3D3D3';
         context.fill();
@@ -105,7 +97,8 @@ export default {
         let context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.beginPath();
-        context.arc(250, 150, 125, 0, 2 * Math.PI);
+        context.arc(310, 150, 125, 0, 2 * Math.PI);
+        context.closePath();
         context.fillStyle = '#ffcc00';
         context.fill();
       },
@@ -113,14 +106,21 @@ export default {
         let context = canvas.getContext('2d');
 
         context.beginPath();
-        context.moveTo(this.rectX - 5, this.rectY);
-        context.lineTo(this.rectX, this.rectY - 7);
-        context.lineTo(this.rectX + 5, this.rectY);
-        context.arc(this.rectX, this.rectY, 5, 0, Math.PI);
+        context.moveTo(posX - 5, posY);
+        context.lineTo(posX, posY - 7);
+        context.lineTo(posX + 5, posY);
+        context.arc(posX, posY, 5, 0, Math.PI);
 
         context.closePath();
-        context.fillStyle = '#404040';
+        context.fillStyle = '#7094cf';
         context.fill();
+
+      },
+      createRaindrops: function() {
+        this.drops.push({ x: 180, y: 0 });
+        this.drops.push({ x: 280, y: 50 });
+        this.drops.push({ x: 350, y: 80 });
+        this.drops.push({ x: 470, y: 40 });
       }
 
   }
@@ -157,7 +157,7 @@ export default {
     width: 30rem;
     margin-left: 30rem;
     margin-bottom: 10rem;
-    border: 2px solid red;
+    /* border: 2px solid red; */
   }
 
   .cold {
