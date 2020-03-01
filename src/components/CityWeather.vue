@@ -47,15 +47,17 @@ export default {
   methods: {
     anim: function(timestamp) {
       if (!start) start = timestamp;
-      let context = canvas.getContext('2d');
-      context.clearRect(0, 0, canvas.width, canvas.height);
+      let ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       if (this.currentWeather === "Clouds") {
         this.cloud()
+
       } else if (this.currentWeather === "Clear") {
         this.sunny()
         let radius = 25 + 100 * Math.abs(Math.cos(this.angle));
           this.angle += 2 / 150
+
       } else if (this.currentWeather === "Rain") {
         this.drops.forEach((drop) => {
           this.rain(drop.x, drop.y);
@@ -64,6 +66,7 @@ export default {
             drop.y = 0;
           }
         })
+
       } else if (this.currentWeather === "Snow") {
         this.flakes.forEach((flake) => {
           this.snow(flake.x, flake.y);
@@ -72,6 +75,7 @@ export default {
             flake.y = 0;
           }
         })
+        
       } else {
         this.sorry()
       }
@@ -82,40 +86,40 @@ export default {
       }
     },
       cloud: function() {
-        let context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.beginPath();
-        context.moveTo(170, 80);
-        context.bezierCurveTo(110, 100, 130, 150, 230, 150);
-        context.bezierCurveTo(250, 150, 300, 170, 340, 150);
-        context.bezierCurveTo(450, 170, 460, 120, 410, 90);
-        context.bezierCurveTo(400, 60, 370, 40, 350, 50);
-        context.bezierCurveTo(320, 10, 270, 10, 240, 50);
-        context.bezierCurveTo(200, 30, 180, 50, 170, 80);
-        context.closePath();
-        context.fillStyle = '#D3D3D3';
-        context.fill();
+        let ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.moveTo(170, 80);
+        ctx.bezierCurveTo(110, 100, 130, 150, 230, 150);
+        ctx.bezierCurveTo(250, 150, 300, 170, 340, 150);
+        ctx.bezierCurveTo(450, 170, 460, 120, 410, 90);
+        ctx.bezierCurveTo(400, 60, 370, 40, 350, 50);
+        ctx.bezierCurveTo(320, 10, 270, 10, 240, 50);
+        ctx.bezierCurveTo(200, 30, 180, 50, 170, 80);
+        ctx.closePath();
+        ctx.fillStyle = '#D3D3D3';
+        ctx.fill();
       },
       sunny: function() {
-        let context = canvas.getContext('2d');
+        let ctx = canvas.getContext('2d');
         let radius = 25 + 100 * Math.abs(Math.cos(this.angle));
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.beginPath();
-        context.arc(310, 150, radius, 0, 2 * Math.PI);
-        context.closePath();
-        context.fillStyle = '#ffcc00';
-        context.fill();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.arc(310, 150, radius, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fillStyle = '#ffcc00';
+        ctx.fill();
       },
       rain: function (posX, posY) {
-        let context = canvas.getContext('2d');
-        context.beginPath();
-        context.moveTo(posX - 5, posY);
-        context.lineTo(posX, posY - 7);
-        context.lineTo(posX + 5, posY);
-        context.arc(posX, posY, 5, 0, Math.PI);
-        context.closePath();
-        context.fillStyle = '#7094cf';
-        context.fill();
+        let ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.moveTo(posX - 5, posY);
+        ctx.lineTo(posX, posY - 7);
+        ctx.lineTo(posX + 5, posY);
+        ctx.arc(posX, posY, 5, 0, Math.PI);
+        ctx.closePath();
+        ctx.fillStyle = '#7094cf';
+        ctx.fill();
       },
       createRaindrops: function() {
         this.drops = []
@@ -129,12 +133,12 @@ export default {
         this.drops.push({ x: 160, y: 220 });
       },
       snow: function (posX, posY) {
-        let context = canvas.getContext('2d');
-        context.beginPath();
-        context.arc(posX, posY, 7, 0, Math.PI * 2, false);
-        context.closePath();
-        context.fill();
-        context.fillStyle = '#d3e1e6';
+        let ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.arc(posX, posY, 7, 0, Math.PI * 2, false);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = '#d3e1e6';
       },
       createSnowflakes: function() {
         this.flakes = []
@@ -152,11 +156,11 @@ export default {
         this.flakes.push({ x: 200, y: 100 });
       },
       sorry: function() {
-        let context = canvas.getContext('2d');
-        context.font = "1.8em Nunito";
-        context.fillStyle = "slategrey";
-        context.textAlign = "center";
-        context.fillText("Sorry, we haven't animated your weather just yet!", canvas.width/2, canvas.height/2);
+        let ctx = canvas.getContext('2d');
+        ctx.font = "1.8em Nunito";
+        ctx.fillStyle = "slategrey";
+        ctx.textAlign = "center";
+        ctx.fillText("Sorry, we haven't animated your weather just yet!", canvas.width/2, canvas.height/2);
       }
     }
 }
@@ -192,7 +196,6 @@ export default {
     width: 30rem;
     margin-left: 30rem;
     margin-bottom: 10rem;
-    /* border: 2px solid red; */
   }
 
   .cold {
